@@ -1,4 +1,4 @@
-# Scripts
+# Formative Kernel Building Script
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/93a7e7b65a7d4d6fa440a9851bf110b2)](https://www.codacy.com/manual/iamsaalim/script?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iamsaalim/script&amp;utm_campaign=Badge_Grade)
 
 ## A useful script for building custom kernel for Android Devices
@@ -12,3 +12,17 @@
   4. Notifies when compilation starts with some useful informations
   5. Uploads build to Telegram
   ~~~
+## How to use this script
+
+```
+  1. This script accepts three arguments 
+          argument 1 [ARG1] :- Accepts the device codename
+          argument 2 [ARG2] :- It accepts the environment, whether clean / dirty. It also generates and copies defconfig
+          argument 3 [ARG3] :- Whether the build should be pushed or not to Telegram 
+          
+  2. After you finish setting up the script as per your requirements, run this in your local
+          source kernel.sh <device_codename> <clean | dirty | def_regs> <PUSH | NOPUSH>
+          
+  3. Example : source kernel.sh violet clean PUSH
+```
+
