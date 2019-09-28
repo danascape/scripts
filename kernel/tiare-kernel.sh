@@ -104,7 +104,7 @@ while true; do
 		echo -e "\n#######################################################################"
 
 		make O=out  $CONFIG savedefconfig &>/dev/null
-		cp out/defconfig arch/arm64/configs/$CONFIG &>/dev/null
+		cp out/defconfig arch/arm/configs/$CONFIG &>/dev/null
 
 		echo -e "(i) Defconfig generated."
 
@@ -126,7 +126,7 @@ while true; do
 	if [ "$choice" == "4" ]; then
 		echo -e "\n#######################################################################"
         echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
-		git clone -b X00PD-zenui https://github.com/raza231198/AnyKernel3
+		git clone -b tiare https://github.com/iamsaalim/AnyKernel3
 		echo -e "\n(i) Strip and move modules to AnyKernel3..."
 
 		# thanks to @adekmaulana
