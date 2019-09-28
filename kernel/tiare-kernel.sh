@@ -33,7 +33,7 @@ export SUBARCH=arm
 export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
 export KBUILD_BUILD_USER=iamsaalim
-export KBUILD_BUILD_HOST=stormbreaker
+export KBUILD_BUILD_HOST=root
 
 # Is this logo
 echo -e "╔╗─╔╗╔═╗─╔╗╔══╗╔═══╗╔╗─╔╗╔═══╗";
