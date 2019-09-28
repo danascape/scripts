@@ -32,8 +32,8 @@ export ARCH=arm64
 export SUBARCH=arm64
 export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
-export KBUILD_BUILD_USER=reza
-export KBUILD_BUILD_HOST=unique
+export KBUILD_BUILD_USER=iamsaalim
+export KBUILD_BUILD_HOST=root
 
 # Is this logo
 echo -e "╔╗─╔╗╔═╗─╔╗╔══╗╔═══╗╔╗─╔╗╔═══╗";
@@ -126,7 +126,7 @@ while true; do
 	if [ "$choice" == "4" ]; then
 		echo -e "\n#######################################################################"
         echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
-		git clone -b X00PD-zenui https://github.com/raza231198/AnyKernel3
+		git clone -b X00PD-zenui https://github.com/iamsaalim/AnyKernel3
 		echo -e "\n(i) Strip and move modules to AnyKernel3..."
 
 		# thanks to @adekmaulana
