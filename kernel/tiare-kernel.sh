@@ -9,7 +9,7 @@ echo -e "$green"
 
 # Main Environment
 KERNEL_DIR=$PWD
-KERN_IMG=$KERNEL_DIR/out/arch/arm/boot/Image.gz-dtb
+KERN_IMG=$KERNEL_DIR/out/arch/arm/boot/zImage-dtb
 ZIP_DIR=$KERNEL_DIR/AnyKernel3
 CONFIG_DIR=$KERNEL_DIR/arch/arm/configs
 CONFIG=msm8937-perf_defconfig
