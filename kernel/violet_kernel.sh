@@ -1,18 +1,18 @@
 #!/bin/bash
-rm /home/travis/out/arch/arm64/boot/Image.gz
-rm /home/travis/out/arch/arm64/boot/Image.gz-dtb
+rm $HOME/out/arch/arm64/boot/Image.gz
+rm $HOME/out/arch/arm64/boot/Image.gz-dtb
 #make clean&&make mrproper
 #make O=../kernel clean&&make O=../kernel mrproper
 export ARCH=arm64
-export LD_LIBRARY_PATH=/home/travis/android/clang/clang-r365631/lib64:$LD_LIBRARY_PATH
-export PATH=/home/ZARASSA/android/clang/clang-r365631/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/android/clang/clang-r365631/lib64:$LD_LIBRARY_PATH
+export PATH=$HOME/android/clang/clang-r365631/bin:$PATH
 export CC=clang
 export O=../out
-export CROSS_COMPILE=/home/travis/android/linaro/bin/aarch64-elf-
-export CROSS_COMPILE_ARM32=/home/travis/android/linaro32/bin/arm-eabi-
+export CROSS_COMPILE=$HOME/android/gcc/bin/aarch64-elf-
+export CROSS_COMPILE_ARM32=$HOME/android/gcc32/bin/arm-eabi-
 export CLANG_TRIPLE=aarch64-linux-gnu-
-export KERNEL_DIR=/home/travis/kernel
-export OUT_DIR=/home/travis/kernel/out
+export KERNEL_DIR=$HOME/kernel
+export OUT_DIR=$HOME/kernel/out
 #export ZIPNAME="mykernel-$(date -d "+1 hour" +%d.%m.%Y-%H:%M:%S).zip"
 
 make O=../out vendor/violet-perf_defconfig
