@@ -17,6 +17,7 @@ CORES=$(grep -c ^processor /proc/cpuinfo)
 THREAD="-j$CORES"
 CROSS_COMPILE+="ccache "
 CROSS_COMPILE+="$PWD/aarch64-linux-android-4.9/bin/aarch64-linux-android-"
+CROSS_COMPILE_ARM32+="$PWD/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
 
 # Modules environtment
 OUTDIR="$PWD/out/"
@@ -32,6 +33,7 @@ export ARCH=arm64
 export SUBARCH=arm64
 export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
+export CROSS_COMPILE_ARM32
 export KBUILD_BUILD_USER=iamsaalim
 export KBUILD_BUILD_HOST=root
 
@@ -62,7 +64,8 @@ while true; do
 
 	if [ "$choice" == "1" ]; then
 		echo -e "\n(i) Cloning toolcahins if folder not exist..."
-		git clone https://github.com/raza231198/aarch64-linux-android-4.9
+		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 69
+                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 69
 		echo -e ""
 		make  O=out $CONFIG $THREAD &>/dev/null
 		make  O=out $THREAD & pid=$!
@@ -132,7 +135,7 @@ while true; do
 	if [ "$choice" == "4" ]; then
 		echo -e "\n#######################################################################"
         echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
-		git clone -b X00PD-zenui https://github.com/iamsaalim/AnyKernel3
+		git clone -b x00p https://github.com/iamsaalim/AnyKernel3
 		echo -e "\n(i) Strip and move modules to AnyKernel3..."
 
 		# thanks to @adekmaulana

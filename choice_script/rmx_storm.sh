@@ -64,7 +64,8 @@ while true; do
 
 	if [ "$choice" == "1" ]; then
 		echo -e "\n(i) Cloning toolcahins if folder not exist..."
-		git clone https://github.com/raza231198/aarch64-linux-android-4.9 --depth 69
+		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 69
+                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 69
 		echo -e ""
 		make  O=out $CONFIG $THREAD &>/dev/null
 		make  O=out $THREAD & pid=$!
