@@ -17,6 +17,7 @@ CORES=$(grep -c ^processor /proc/cpuinfo)
 THREAD="-j$CORES"
 CROSS_COMPILE+="ccache "
 CROSS_COMPILE+="$PWD/aarch64-linux-android-4.9/bin/aarch64-linux-android-"
+CROSS_COMPILE_ARM32+="$PWD/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
 
 # Modules environtment
 OUTDIR="$PWD/out/"
@@ -32,6 +33,7 @@ export ARCH=arm64
 export SUBARCH=arm64
 export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
+export CROSS_COMPILE_ARM32
 export KBUILD_BUILD_USER=iamsaalim
 export KBUILD_BUILD_HOST=root
 
