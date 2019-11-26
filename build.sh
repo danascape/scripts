@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-git clone --depth=1 https://github.com/stormbreaker-project/kernel_xiaomi_violet kernel
+git clone --depth=1 https://github.com/stormbreaker-project/kernel_xiaomi_sdm660 kernel
 cd kernel
 git clone --depth=1 https://github.com/Haseo97/Clang-10.0.0 clang
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r39 stock
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r39 stock_32
-git clone --depth=1 https://github.com/Yasir-siddiqui/AnyKernel3 -b lavender AnyKernel
+git clone --depth=1 https://github.com/iamsaalim/AnyKernel3 -b lavender AnyKernel
 echo "Done"
 GCC="$(pwd)/aarch64-linux-android-"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
-export CONFIG_PATH=$PWD/arch/arm64/configs/vendor/violet-perf_defconfig
+export CONFIG_PATH=$PWD/arch/arm64/configs/lavender_defconfig
 PATH="${PWD}/clang/bin:${PWD}/stock/bin:${PWD}/stock_32/bin:${PATH}"
 export ARCH=arm64
-export KBUILD_BUILD_HOST=NotKernel
+export KBUILD_BUILD_HOST=stormKernel
 export KBUILD_BUILD_USER="root"
 # Send info plox channel
 function sendinfo() {
@@ -45,7 +45,7 @@ function finerr() {
 }
 # Compile plox
 function compile() {
-   make O=out ARCH=arm64 vendor/violet-perf_defconfig
+   make O=out ARCH=arm64 lavender_defconfig
        make -j$(nproc --all) O=out \
                              ARCH=arm64 \
 			     CROSS_COMPILE=aarch64-linux-android- \
