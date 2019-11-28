@@ -35,7 +35,7 @@ export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
 export CROSS_COMPILE_ARM32
 export KBUILD_BUILD_USER=iamsaalim
-export KBUILD_BUILD_HOST=root
+export KBUILD_BUILD_HOST=archserver
 
 # initialise stormbreaker logo
 echo -e "          __                                      "; 
