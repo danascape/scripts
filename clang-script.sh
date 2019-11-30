@@ -1,3 +1,5 @@
+#!/bin/bash
+echo "$RANDOM"  # Supported in bash. No warnings.
 #Cleanup output dir
 rm -rf out
 mkdir out
