@@ -1,0 +1,1 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/93a7e7b65a7d4d6fa440a9851bf110b2)](https://www.codacy.com/manual/iamsaalim/script?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iamsaalim/script&amp;utm_campaign=Badge_Grade)
