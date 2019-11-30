@@ -23,10 +23,3 @@ make -j20 O=out \
                       OBJDUMP="llvm-objdump"
                       STRIP="llvm-strip"
 
-#Copy to anykernel
-#cd ~/violet_anykernel/
-#rm *.zip
-#cp ../kernel_violet/out/arch/arm64/boot/Image.gz-dtb .
-
-#Zip it
-#zip -r9 kernel.zip *
