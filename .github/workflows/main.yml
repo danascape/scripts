@@ -22,19 +22,14 @@ jobs:
         CHAT_ID: ${{ secrets.CHAT_ID }}
       run: |
         git clone -b rebase https://github.com/stormbreaker-project/kernel_realme_sdm660 --depth 69
+        git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/
+        git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/        
         export CROSS_COMPILE=${PWD}/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+        export CROSS_COMPILE_ARM32=${PWD}/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+        cd kernel_realme_sdm660
         export KBUILD_BUILD_USER="iamsaalim"
         export ARCH=arm64
-        export CROSS_COMPILE_ARM32=${PWD}/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
-        export SUBARCH=arm64
-        #export DTC_EXT=dtc
-        #chmod a+x /home/runner/work/iamsaalim/kernel_realme_sdm660/scripts/dtc/bin/dtc
-        #PATH="clang/bin:aarch64-linux-android-4.9/bin:aarch64-linux-android-4.9/bin:/home/runner/work/iamsaalim/kernel_realme_sdm660/scripts/dtc/bin:${PATH}"
-        #mkdir clang
-        #wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/39e7c63aa6239ae92d63913c82bbe1e9e44b4013/clang-r370808.tar.gz
-        #tar -C clang -xvzf clang-r*.tar.gz
-        git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/
-        git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/
+        export SUBARCH=arm64        
         make -j12 O=out RMX1801_defconfig
         make -j12 O=out 
         if [ -f out/arch/arm64/boot/Image.gz-dtb ]; then
