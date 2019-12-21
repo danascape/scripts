@@ -37,14 +37,9 @@ jobs:
         git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/
         make -j12 O=out RMX1801_defconfig
         make -j12 O=out 
-     #           CROSS_COMPILE=$CROSS_COMPILE \
-     #           CROSS_COMPILE_ARM32=$CROSS_COMPILE_ARM32 \
-     #           CC=${PWD}/clang/bin/clang \
-     #           CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb 2>&1 | tee error.log
         if [ -f out/arch/arm64/boot/Image.gz-dtb ]; then
           cp out/arch/arm64/boot/Image.gz-dtb flasher/Image.gz-dtb
           cd flasher
-     #     wget https://iamsaalim.web.app/dtbo-66-ginkgo.img -O dtbo.img
           zip -r9 "StormbreakerKernel-KernelCI.zip" * -x .git README.md LICENSE
           cp StormbreakerKernel-KernelCI.zip ..
           cd ..
