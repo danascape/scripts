@@ -57,7 +57,7 @@ jobs:
          -F caption="Build for [${GITHUB_SHA}](https://github.com/stormbreaker-project/kernel_realme_sdm660/commit/${GITHUB_SHA}) succeeded at: *$(TZ=Asia/Kolkata date)* \`|\` Flashable zip attached"     
         else
           cat error.log | grep -i -A3 error > build_error.txt
-          curl --progress-bar -F document=@"bleed_error.txt" "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
+          curl --progress-bar -F document=@"build_error.txt" "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
           -F chat_id="${CHAT_ID}"  \
           -F "disable_web_page_preview=true" \
           -F "parse_mode=Markdown" \
