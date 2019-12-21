@@ -22,8 +22,8 @@ jobs:
         CHAT_ID: ${{ secrets.CHAT_ID }}
       run: |
         git clone -b rebase https://github.com/stormbreaker-project/kernel_realme_sdm660 --depth 69
-        git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/
-        git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/        
+        git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 69
+        git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 69        
         export CROSS_COMPILE=${PWD}/aarch64-linux-android-4.9/bin/aarch64-linux-android-
         export CROSS_COMPILE_ARM32=${PWD}/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
         cd kernel_realme_sdm660
