@@ -21,7 +21,7 @@ jobs:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         CHAT_ID: ${{ secrets.CHAT_ID }}
       run: |
-        git clone -b rebase https://github.com/stormbreaker-project/kernel_realme_sdm660
+        git clone -b rebase https://github.com/stormbreaker-project/kernel_realme_sdm660 --depth 69
         export CROSS_COMPILE=${PWD}/aarch64-linux-android-4.9/bin/aarch64-linux-android-
         export KBUILD_BUILD_USER="iamsaalim"
         export ARCH=arm64
