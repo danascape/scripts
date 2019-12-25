@@ -12,6 +12,7 @@ while (( ${#} )); do
     case ${1} in
         "-a"|"--audio") AUDIO=true ;;
         "-i"|"--init") INIT=true ;;
+        "-p"|"--prima") PRIMA=true ;;
         "-t"|"--tag") shift; TAG=${1} ;;
         "-u"|"--update") UPDATE=true ;;
     esac
@@ -23,7 +24,12 @@ done
 [[ -z ${TAG} ]] && { echo "No tag was specified!"; exit; }
 
 SUBFOLDER_WLAN=drivers/staging
-REPOS_WLAN=( "fw-api" "qcacld-3.0" "qca-wifi-host-cmn" )
+if [[ -z ${PRIMA} ]]; then
+    REPOS_WLAN=( "fw-api" "qcacld-3.0" "qca-wifi-host-cmn" )
+else
+    REPOS_WLAN=( "prima" )
+fi
+
 URL_WLAN=https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/
 
 for REPO in "${REPOS_WLAN[@]}"; do
