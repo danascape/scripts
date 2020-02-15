@@ -43,8 +43,9 @@ for REPO in "${REPOS_WLAN[@]}"; do
         git read-tree --prefix="${SUBFOLDER_WLAN}/${REPO}" -u FETCH_HEAD
         git commit --no-edit -m "staging: ${REPO}: Checkout at ${TAG}" -s
     elif [[ -n ${UPDATE} ]]; then
-        git merge --no-edit -m "staging: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
-                  -X subtree="${SUBFOLDER_WLAN}/${REPO}" FETCH_HEAD --signoff
+        git merge --no-edit -m "staging: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)"  \
+                  -m "$(git log --oneline --no-merges $(git branch | grep "\*" | sed 's/\* //')..FETCH_HEAD)" \
+                  -X subtree="${SUBFOLDER_WLAN}/${REPO}" --signoff FETCH_HEAD --signoff
     fi
 done
 
@@ -66,6 +67,7 @@ for REPO in "${REPOS_AUDIO[@]}"; do
         git commit --no-edit -m "techpack: ${REPO}: Checkout at ${TAG}" -s
     elif [[ -n ${UPDATE} ]]; then
         git merge --no-edit -m "techpack: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
+                  -m "$(git log --oneline --no-merges $(git branch | grep "\*" | sed 's/\* //')..FETCH_HEAD)" \
                   -X subtree="${SUBFOLDER_AUDIO}" FETCH_HEAD --signoff
     fi
 done
