@@ -54,8 +54,8 @@ while true; do
 
 	if [ "$choice" == "1" ]; then
 		echo -e "\n(i) Cloning toolcahins if folder not exist..."
-		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 69
-                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 69
+		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 1
+                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 1
 		echo -e ""
 		make  O=out $CONFIG $THREAD &>/dev/null
 		make  O=out $THREAD & pid=$!
@@ -125,7 +125,7 @@ while true; do
 	if [ "$choice" == "4" ]; then
 		echo -e "\n#######################################################################"
         echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
-		git clone -b x00p https://github.com/iamsaalim/AnyKernel3
+		git clone -b x00p https://github.com/iamsaalim/AnyKernel3 --depth 1
 		echo -e "\n(i) Strip and move modules to AnyKernel3..."
 
 		# thanks to @adekmaulana
