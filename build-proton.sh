@@ -16,7 +16,7 @@ export KBUILD_COMPILER_STRING="$($HOME/clang/bin/clang --version | head -n 1 | p
 export KBUILD_BUILD_USER="saalim"
 export KBUILD_BUILD_HOST="travis"
 
-make O=out ARCH=arm64 X00P_defconfig
+make O=out ARCH=arm64 rosy-perf_defconfig
 
 
 make -j$(nproc --all) O=out \
