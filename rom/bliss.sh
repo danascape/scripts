@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-echo "Installing Build packages"
 
-sudo apt update && sudo apt upgrade -y && sudo apt install ccache && sudo apt-get install git-core && git clone https://GitHub.com/akhilnarang/scripts && cd scripts && bash setup/android_build_env.sh -y 
-
+git config —global user.name Aftab-111
+git config —global user.email ashrafiaftab0@gmail.com
+git config —global color.ui false
 # initailize repo
-mkdir -p ~/bin && mkdir -p ~/bliss && curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo && chmod a+x ~/bin/repo && cd ~/bliss 
 repo init -u https://github.com/BlissRoms/platform_manifest.git -b q 
 repo sync --no-tags --no-clone-bundle --force-sync 
 
