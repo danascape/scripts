@@ -13,10 +13,10 @@ CONFIG_PATH=$KERNEL_DIR/arch/arm64/configs/$CONFIG
 export PATH="$HOME/clang/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/clang/lib:$HOME/clang/lib64:$LD_LIBRARY_PATH"
 export KBUILD_COMPILER_STRING="$($HOME/clang/bin/clang --version | head -n 1 | perl -pe 's/\((?:http|git).*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')"
-export KBUILD_BUILD_USER="saalim"
+export KBUILD_BUILD_USER="danascape"
 export KBUILD_BUILD_HOST="travis"
 
-make O=out ARCH=arm64 rosy-perf_defconfig
+make O=out ARCH=arm64 X00P_defconfig
 
 
 make -j$(nproc --all) O=out \
