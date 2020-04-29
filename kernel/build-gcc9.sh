@@ -7,7 +7,6 @@ export USE_CCACHE=1
 ZIPNAME=
 BOTAPI=
 USERID=
-CCACHE=$(command -v ccache)
 
 make ARCH=arm64 O=out X00P_defconfig
 PATH="$(pwd)/arm64-gcc/bin:$(pwd)/arm32-gcc/bin:${PATH}" \

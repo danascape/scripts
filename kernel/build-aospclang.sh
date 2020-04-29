@@ -8,7 +8,6 @@ git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linu
 git clone --depth=1 https://github.com/iamsaalim/AnyKernel3 -b lavender AnyKernel
 echo "Done"
 GCC="$(pwd)/aarch64-linux-android-"
-IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
 export CONFIG_PATH=$PWD/arch/arm64/configs/lavender_defconfig

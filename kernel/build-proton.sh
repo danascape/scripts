@@ -1,8 +1,7 @@
+#!/bin/bash
+
 # Main environtment
 KERNEL_DIR=$(pwd)
-PARENT_DIR="$(dirname "$KERNEL_DIR")"
-KERN_IMG=$KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb
-CONFIG_PATH=$KERNEL_DIR/arch/arm64/configs/$CONFIG
 
 # download proton
 #wget -O proton.tar.zst https://kdrag0n.dev/files/redirector/proton_clang-latest.tar.zst
@@ -17,7 +16,6 @@ export KBUILD_BUILD_USER="danascape"
 export KBUILD_BUILD_HOST="travis"
 
 make O=out ARCH=arm64 X00P_defconfig
-
 
 make -j$(nproc --all) O=out \
                       ARCH=arm64 \
