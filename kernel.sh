@@ -3,6 +3,7 @@
  # Script For Building Android arm64 Kernel
  #
  # Copyright (c) 2018-2020 Panchajanya1999 <rsk52959@gmail.com>
+ # Copyright (c) 2019-2020 iamsaalim <saalimquadri1@gmail.com>
  #
  # Licensed under the Apache License, Version 2.0 (the "License");
  # you may not use this file except in compliance with the License.
@@ -36,19 +37,19 @@ err() {
 KERNEL_DIR=$PWD
 
 # The name of the Kernel, to name the ZIP
-ZIPNAME="azure"
+ZIPNAME="Stormbreaker"
 
 # The name of the device for which the kernel is built
-MODEL="Redmi Note 7 Pro"
+MODEL=""
 
 # The codename of the device
-DEVICE="violet"
+DEVICE=""
 
 # The defconfig which should be used. Get it from config.gz from
 # your device or check source
-DEFCONFIG=vendor/violet-perf_defconfig
+DEFCONFIG=
 
-# Specify compiler. 
+# Specify compiler.
 # 'clang' or 'gcc'
 COMPILER=clang
 
@@ -120,7 +121,7 @@ KERVER=$(make kernelversion)
 # Set a commit head
 COMMIT_HEAD=$(git log --oneline -1)
 
-# Set Date 
+# Set Date
 DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 
 #Now Its time for other stuffs like cloning, exporting, etc
@@ -144,7 +145,7 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 	fi
 
 	msg "|| Cloning Anykernel ||"
-	git clone --depth 1 --no-single-branch https://github.com/Panchajanya1999/AnyKernel2.git -b $DEVICE
+	git clone --depth 1 --no-single-branch https://github.com/stormbreaker-project/AnyKernel3.git -b $DEVICE
 	msg "|| Cloning libufdt ||"
 	git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
 }
@@ -152,7 +153,7 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 ##------------------------------------------------------##
 
 exports() {
-	export KBUILD_BUILD_USER="panchajanya"
+	export KBUILD_BUILD_USER="danascape"
 	export ARCH=arm64
 	export SUBARCH=arm64
 
@@ -194,7 +195,7 @@ tg_post_build() {
 	-F chat_id="$2"  \
 	-F "disable_web_page_preview=true" \
 	-F "parse_mode=html" \
-	-F caption="$3 | <b>MD5 Checksum : </b><code>$MD5CHECK</code>"  
+	-F caption="$3 | <b>MD5 Checksum : </b><code>$MD5CHECK</code>"
 }
 
 ##----------------------------------------------------------##
@@ -222,7 +223,7 @@ build_kernel() {
 	fi
 
 	BUILD_START=$(date +"%s")
-	
+
 	if [ $COMPILER = "clang" ]
 	then
 		MAKE+=(
@@ -243,7 +244,7 @@ build_kernel() {
 			STRIP=aarch64-elf-strip
 		)
 	fi
-	
+
 	if [ $SILENCE = "1" ]
 	then
 		MAKE+=( -s )
@@ -258,7 +259,7 @@ build_kernel() {
 		BUILD_END=$(date +"%s")
 		DIFF=$((BUILD_END - BUILD_START))
 
-		if [ -f "$KERNEL_DIR"/out/arch/arm64/boot/Image.gz-dtb ] 
+		if [ -f "$KERNEL_DIR"/out/arch/arm64/boot/Image.gz-dtb ]
 	    then
 	    	msg "|| Kernel successfully compiled ||"
 	    	if [ $BUILD_DTBO = 1 ]
@@ -275,7 +276,7 @@ build_kernel() {
 				tg_post_build "error.log" "$CHATID" "<b>Build failed to compile after $((DIFF / 60)) minute(s) and $((DIFF % 60)) seconds</b>"
 			fi
 		fi
-	
+
 }
 
 ##--------------------------------------------------------------##
