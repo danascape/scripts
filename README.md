@@ -65,11 +65,11 @@
                      1 - Yes, build DTBO
                      0 - No, thanks
 
-        SIGN 	   - It sign the ZIP with AOSP Sign Keys for Package Signature verfication in 
-        			 custom recoveries. 
+        SIGN	   - It sign the ZIP with AOSP Sign Keys for Package Signature verfication in 
+				 custom recoveries. 
 
-        			 1 - Yes, sign the ZIP
-        			 0 - No, thanks.
+				 1 - Yes, sign the ZIP
+				 0 - No, thanks.
 
           
   2. You should take care of the AnyKernel repository the script is cloning. You should have
