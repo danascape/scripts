@@ -13,11 +13,32 @@ PROJECT_DIR="$PWD"
 # Create some folders
 mkdir -p "$PROJECT_DIR/kernel/"
 
-function dlzip() {
+# Arguements check
+if [ -z ${1} ] || [ -z ${2} ] || [ -z ${3} ]; then
+    echo -e "Usage: bash build_kernel.sh <kernel zip link/file> <defconfig name>"
+    exit 1
+fi
+
+# Download compressed kernel source
+if [[ "$1" == *"http"* ]]; then
     echo "Downloading zip"
     mkdir "$PROJECT_DIR/input"
     cd ${PROJECT_DIR}/input
     aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
     URL=$PROJECT_DIR/input/${FILE}
     [[ -e ${URL} ]] && du -sh ${URL}
-}
+else
+    URL=$( realpath "$1" )
+    echo "Copying file"
+    cp -a ${1} ${PROJECT_DIR}/input/
+fi
+FILE=${URL##*/}
+EXTENSION=${URL##*.}
+UNZIP_DIR=${FILE/.$EXTENSION/}
+[[ -d ${PROJECT_DIR}/kernels/${UNZIP_DIR} ]] && rm -rf ${PROJECT_DIR}/kernels/${UNZIP_DIR}
+
+# Extract file
+echo "Extracting file"
+7z x ${PROJECT_DIR}/input/${FILE} -y -o${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
+KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "AndroidKernel.mk" | head -1)")"
+echo "done"
