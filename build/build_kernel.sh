@@ -77,7 +77,10 @@ if [ -f $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb ]
 then
     echo "Build Complete"
 else
-    echo "Build Failed"
+    echo "Build Failed. Uploading logs"
+    curl -F chat_id="${CHAT_ID}"  \
+                    -F document=@"logs.txt" \
+                    https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument
 fi
 
 # Clone Anykernel
