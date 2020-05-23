@@ -45,10 +45,11 @@ echo "done"
 
 # Find defconfig
 echo "Checking if defconfig exist ($2)"
-DEFCONFIG=$ (grep -rf $2-perf_defconfig $KERNEL_DIR/arch/arm64/configs/ )
-it [ $DEFCONFIG -eq 1]
+
+if [ -f $KERNEL_DIR/arch/arm64/configs/$2-perf_defconfig ]
 then
     echo "Starting build"
 else
     echo "Defconfig not found"
+    exit 1
 fi
