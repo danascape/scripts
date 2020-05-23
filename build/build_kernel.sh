@@ -14,7 +14,7 @@ PROJECT_DIR="$HOME/weeb/scripts"
 mkdir -p "$PROJECT_DIR/kernel/"
 
 # Arguements check
-if [ -z ${1} ] || [ -z ${2} ] || [ -z ${3} ]; then
+if [ -z ${1} ] || [ -z ${2} ] ; then
     echo -e "Usage: bash build_kernel.sh <kernel zip link/file> <defconfig name>"
     exit 1
 fi
@@ -45,3 +45,4 @@ echo "done"
 
 # Start Build
 echo "Checking if defconfig exist"
+echo "$2"
