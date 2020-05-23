@@ -7,4 +7,19 @@
 #
 # Build functions
 
+# Store project path
+PROJECT_DIR="$PWD"
+
+# Create some folders
+mkdir -p "$PROJECT_DIR/kernel/"
+
 echo -e "currently WIP"
+
+function dlzip() {
+    echo "Downloading zip"
+    mkdir "$PROJECT_DIR/input"
+    cd ${PROJECT_DIR}/input
+    aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
+    URL=$PROJECT_DIR/input/${FILE}
+    [[ -e ${URL} ]] && du -sh ${URL}
+}
