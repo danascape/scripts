@@ -53,3 +53,34 @@ else
     echo "Defconfig not found"
     exit 1
 fi
+
+# Clone Toolchains
+git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r39 stock
+git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r39 stock_32
+git clone --depth 1 https://github.com/stormbreaker-project/stormbreaker-clang clang
+echo "Toolchains cloned"
+
+# Set Env
+PATH="${PWD}/clang/bin:${PWD}/stock/bin:${PWD}/stock_32/bin:${PATH}"
+export ARCH=arm64
+export KBUILD_BUILD_HOST=stormBot
+export KBUILD_BUILD_USER="TS"
+
+# Build
+cd "$KERNEL_DIR"
+
+make O=out ARCH=arm64 $2-perf_defconfig
+
+make -j$(nproc --all) O=out \
+                             ARCH=arm64 \
+			     CROSS_COMPILE=aarch64-linux-android- \
+			     CROSS_COMPILE_ARM32=arm-linux-androideabi-
+
+if [ -f $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb ]
+then
+    echo "Build Complete"
+else
+    echo "Build Failed"
+fi
+
+# Clone Anykernel
