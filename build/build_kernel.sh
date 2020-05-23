@@ -13,8 +13,6 @@ PROJECT_DIR="$PWD"
 # Create some folders
 mkdir -p "$PROJECT_DIR/kernel/"
 
-echo -e "currently WIP"
-
 function dlzip() {
     echo "Downloading zip"
     mkdir "$PROJECT_DIR/input"
