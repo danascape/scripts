@@ -88,6 +88,10 @@ git clone -b $2 https://github.com/stormbreaker-project/AnyKernel3
 cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 cd AnyKernel3 && make normal
 
+curl -F chat_id="${CHAT_ID}"  \
+                    -F document=@"S*.zip" \
+                    https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument
+
 #Cleanup
 rm -rf $KERNEL_DIR $UNZIP_DIR
 rm -rf $PROJECT_DIR/input
