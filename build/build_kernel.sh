@@ -81,3 +81,7 @@ else
 fi
 
 # Clone Anykernel
+
+#Cleanup
+rm -rf $KERNEL_DIR $UNZIP_DIR
+rm -rf $PROJECT_DIR/input
