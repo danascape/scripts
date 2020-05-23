@@ -8,7 +8,7 @@
 # Build functions
 
 # Store project path
-PROJECT_DIR="$PWD"
+PROJECT_DIR="$HOME/weeb/scripts"
 
 # Create some folders
 mkdir -p "$PROJECT_DIR/kernel/"
@@ -24,7 +24,7 @@ if [[ "$1" == *"http"* ]]; then
     echo "Downloading zip"
     mkdir "$PROJECT_DIR/input"
     cd ${PROJECT_DIR}/input
-    aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
+    aria2c -q -s 16 -x 16 "$1" -d ${PROJECT_DIR}/input -o kernel.zip || { echo "Download failed!"; }
     URL=$PROJECT_DIR/input/${FILE}
     [[ -e ${URL} ]] && du -sh ${URL}
 else
