@@ -42,3 +42,6 @@ echo "Extracting file"
 7z x ${PROJECT_DIR}/input/${FILE} -y -o${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "AndroidKernel.mk" | head -1)")"
 echo "done"
+
+# Start Build
+echo "Checking if defconfig exist"
