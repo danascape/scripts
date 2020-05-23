@@ -81,6 +81,9 @@ else
 fi
 
 # Clone Anykernel
+git clone -b $2 https://github.com/stormbreaker-project/AnyKernel3
+cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
+cd AnyKernel3 && make normal
 
 #Cleanup
 rm -rf $KERNEL_DIR $UNZIP_DIR
