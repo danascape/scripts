@@ -43,6 +43,12 @@ echo "Extracting file"
 KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "AndroidKernel.mk" | head -1)")"
 echo "done"
 
-# Start Build
-echo "Checking if defconfig exist"
-echo "$2"
+# Find defconfig
+echo "Checking if defconfig exist ($2)"
+DEFCONFIG=$ (grep -rf $2-perf_defconfig $KERNEL_DIR/arch/arm64/configs/ )
+it [ $DEFCONFIG -eq 1]
+then
+    echo "Starting build"
+else
+    echo "Defconfig not found"
+fi
