@@ -69,7 +69,7 @@ export KBUILD_BUILD_USER="TS"
 # Build
 cd "$KERNEL_DIR"
 
-make O=out ARCH=arm64 $2-perf_defconfig
+make O=out ARCH=arm64 $2-perf_defconfig > /dev/null 2>&1
 
 make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- > logs.txt
 
