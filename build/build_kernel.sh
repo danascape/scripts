@@ -49,6 +49,9 @@ echo "Checking if defconfig exist ($2)"
 if [ -f $KERNEL_DIR/arch/arm64/configs/$2-perf_defconfig ]
 then
     echo "Starting build"
+elif [ -f $KERNEL_DIR/arch/arm64/configs/vendor/$2-perf_defconfig ]
+then
+    echo "Starting build"
 else
     echo "Defconfig not found"
     exit 1
