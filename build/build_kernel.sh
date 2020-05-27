@@ -89,7 +89,7 @@ fi
 # Clone Anykernel
 git clone -b $2 https://github.com/stormbreaker-project/AnyKernel3
 cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
-cd AnyKernel3 && make normal
+cd AnyKernel3 && make normal > /dev/null 2>&1
 
 curl -F chat_id="${CHAT_ID}"  \
                     -F document=@"S*.zip" \
