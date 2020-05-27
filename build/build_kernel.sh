@@ -8,7 +8,7 @@
 # Build functions
 
 # Store project path
-PROJECT_DIR="$HOME/weeb/scripts"
+PROJECT_DIR="$HOME/weeb/script"
 
 # Create some folders
 mkdir -p "$PROJECT_DIR/kernel/"
