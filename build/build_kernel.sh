@@ -91,9 +91,14 @@ git clone -b $2 https://github.com/stormbreaker-project/AnyKernel3
 cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 cd AnyKernel3 && make normal > /dev/null 2>&1
 
-curl -F chat_id="${CHAT_ID}"  \
-                    -F document=@"S*.zip" \
-                    https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument
+# Make a github release.
+export UPLOAD_PATH="$PROJECT_DIR/upload/"
+export ZIP_FILE="$KERNEL_DIR/AnyKernel3/S*.zip
+cd $PROJECT_PATH
+mkdir upload
+go get -u github.com/tcnksm/ghr
+cp $ZIP_FILE $UPLOAD_PATH
+ghr -t ${GITHUB_TOKEN} -u stormbreaker-project -r release-test -n "Latest Test Release for $(echo $2)" -b "$2"  -c 12345  ${UPLOAD_PATH}
 
 #Cleanup
 rm -rf $KERNEL_DIR $UNZIP_DIR
