@@ -93,7 +93,7 @@ cd AnyKernel3 && make normal > /dev/null 2>&1
 
 # Make a github release.
 export UPLOAD_PATH="$PROJECT_DIR/upload/"
-export ZIP_FILE="$KERNEL_DIR/AnyKernel3/S*.zip
+export ZIP_FILE="$KERNEL_DIR/AnyKernel3/S*.zip"
 cd $PROJECT_PATH
 mkdir upload
 go get -u github.com/tcnksm/ghr
