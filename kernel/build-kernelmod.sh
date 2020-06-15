@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Copyright (C) 2018 Abubakar Yagob (blacksuan19)
 # Copyright (C) 2018 Rama Bondan Prakoso (rama982)
+# Copyright (C) 2020 Saalim Quadri (iamsaalim)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # Color
@@ -15,16 +16,16 @@ CONFIG=X00P_defconfig
 CORES=$(grep -c ^processor /proc/cpuinfo)
 THREAD="-j$CORES"
 CROSS_COMPILE+="ccache "
-CROSS_COMPILE+="$PWD/aarch64-linux-android-4.9/bin/aarch64-linux-android-"
-CROSS_COMPILE_ARM32+="$PWD/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
+CROSS_COMPILE+="$PWD/gcc/bin/aarch64-linux-android-"
+CROSS_COMPILE_ARM32+="$PWD/gcc32/bin/arm-linux-androideabi-"
 
 # Modules environtment
 OUTDIR="$PWD/out/"
 SRCDIR="$PWD/"
-MODULEDIR="$PWD/AnyKernel3/modules/system/lib/modules/"
+MODULEDIR="$PWD/AnyKernel3/modules/vendor/lib/modules/"
 PRIMA="$PWD/AnyKernel3/modules/vendor/lib/modules/wlan.ko"
 PRONTO="$PWD/AnyKernel3/modules/vendor/lib/modules/pronto/pronto_wlan.ko"
-STRIP="$PWD/aarch64-linux-android-4.9/bin/$(echo "$(find "$PWD/aarch64-linux-android-4.9/bin" -type f -name "aarch64-*-gcc")" | awk -F '/' '{print $NF}' |\
+STRIP="$PWD/gcc/bin/$(echo "$(find "$PWD/gcc/bin" -type f -name "aarch64-*-gcc")" | awk -F '/' '{print $NF}' |\
 			sed -e 's/gcc/strip/')"
 
 # Export
@@ -33,29 +34,32 @@ export SUBARCH=arm64
 export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
 export CROSS_COMPILE_ARM32
-export KBUILD_BUILD_USER=iamsaalim
-export KBUILD_BUILD_HOST=archserver
+export KBUILD_BUILD_USER=saalim
+export KBUILD_BUILD_HOST=hetzner
 
 # initialise stormbreaker logo
-echo -e "          __                                      "; 
-echo -e "  _______/  |_  ___________  _____                "; 
-echo -e "/  ___/\   __\/  _ \_  __ \/     \                ";
-echo -e "\___ \  |  | (  <_> )  | \/  Y Y  \               ";
-echo -e "/____  > |__|  \____/|__|  |__|_|  /              ";
-echo -e "     \/                          \/               ";
-echo -e "___.                         __                   ";
-echo -e "\_ |_________   ____ _____  |  | __ ___________   ";
-echo -e " | __ \_  __ \_/ __ \\__  \ |  |/ // __ \_  __ \  ";
-echo -e " | \_\ \  | \/\  ___/ / __ \|    <\  ___/|  | \/  ";
-echo -e " |___  /__|    \___  >____  /__|_ \\___  >__|     ";
-echo -e "     \/            \/     \/     \/    \/         ";
+echo -e "             ,:\                       ";
+echo -e "            //  \_()  ___              ";
+echo -e "           ||   |    |   ||            ";
+echo -e "           ||   |    |   ||            ";
+echo -e "           ||   |____|___||            ";
+echo -e "            \\  / ||                   ";
+echo -e "             `:/  ||                   ";
+echo -e "                  ||                   ";
+echo -e "                  ||                   ";
+echo -e "                  XX                   ";
+echo -e "                  XX                   ";
+echo -e "                  XX                   ";
+echo -e "                  XX                   ";
+echo -e "                  OO                   ";
+echo -e "                  `'                   ";
 
 # Main script
 while true; do
 	echo -e "\n[1] Build Kernel"
 	echo -e "[2] Regenerate defconfig"
 	echo -e "[3] Source cleanup"
-	echo -e "[4] Create flashable zip"
+	echo -e "[4] Create flashable zip with modules"
 	echo -e "[5] Quit"
 	echo -ne "\n(i) Please enter a choice[1-5]: "
 
@@ -63,8 +67,8 @@ while true; do
 
 	if [ "$choice" == "1" ]; then
 		echo -e "\n(i) Cloning toolcahins if folder not exist..."
-		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 69
-                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 69
+		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 1 gcc
+                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 1 gcc32
 		echo -e ""
 		make  O=out $CONFIG $THREAD &>/dev/null
 		make  O=out $THREAD & pid=$!
@@ -111,7 +115,7 @@ while true; do
 	if [ "$choice" == "2" ]; then
 		echo -e "\n#######################################################################"
 
-		make O=out  $CONFIG savedefconfig &>/dev/null
+		make O=out $CONFIG savedefconfig &>/dev/null
 		cp out/defconfig arch/arm64/configs/$CONFIG &>/dev/null
 
 		echo -e "(i) Defconfig generated."
@@ -134,7 +138,7 @@ while true; do
 	if [ "$choice" == "4" ]; then
 		echo -e "\n#######################################################################"
         echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
-		git clone -b x00p https://github.com/iamsaalim/AnyKernel3
+		git clone -b X00P https://github.com/stormbreaker-project/AnyKernel3
 		echo -e "\n(i) Strip and move modules to AnyKernel3..."
 
 		# thanks to @adekmaulana
@@ -154,13 +158,13 @@ while true; do
 				*/wlan.ko)
 					cp -ar "${MOD}" "${PRIMA}"
 					cp -ar "${MOD}" "${PRONTO}"
+					cp -ar "${MOD}" "{MODULEDIR}"
 			esac
 		done
 		echo -e "\n(i) Done moving modules"
 
-		rm $PWD/AnyKernel3/modules/system/lib/modules/wlan.ko
 		cd $ZIP_DIR
-		cp $KERN_IMG $ZIP_DIR/zImage
+		cp $KERN_IMG $ZIP_DIR/Image.gz-dtb
 		make normal &>/dev/null
 		cd ..
 
