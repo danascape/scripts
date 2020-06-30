@@ -92,7 +92,8 @@ cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 cd AnyKernel3 && make normal > /dev/null 2>&1
 
 ZIP=$(echo *.zip)
-curl -F chat_id="${CHAT_ID}" -F document=@"$ZIP" "https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument"
+curl -F chat_id="${CHAT_ID}" -F document=@"$ZIP" "https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument" > /dev/null 2>&1
+echo "Join @Stormbreakerci to get your builld"
 
 #Cleanup
 rm -rf "$KERNEL_DIR" "$UNZIP_DIR"
