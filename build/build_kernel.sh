@@ -68,13 +68,14 @@ PATH="${PWD}/clang/bin:${PWD}/gcc/bin:${PWD}/gcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=stormbreaker
 export KBUILD_BUILD_USER="stormCI"
+export KBUILD_COMPILER_STRING="${PWD}/clang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')";
 
 # Build
 cd "$KERNEL_DIR"
 
 make O=out ARCH=arm64 $2-perf_defconfig > /dev/null 2>&1
 
-make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- > logs.txt
+make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- > logs.txt
 
 if [ -f $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb ]
 then
