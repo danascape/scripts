@@ -58,16 +58,16 @@ else
 fi
 
 # Clone Toolchains
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r39 stock
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r39 stock_32
+git clone --depth=1 https://github.com/stormbreaker-project/aarch64-linux-android-4.9 gcc
+git clone --depth=1 https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 gcc_32
 git clone --depth 1 https://github.com/stormbreaker-project/stormbreaker-clang clang
 echo "Toolchains cloned"
 
 # Set Env
-PATH="${PWD}/clang/bin:${PWD}/stock/bin:${PWD}/stock_32/bin:${PATH}"
+PATH="${PWD}/clang/bin:${PWD}/gcc/bin:${PWD}/gcc_32/bin:${PATH}"
 export ARCH=arm64
-export KBUILD_BUILD_HOST=stormBot
-export KBUILD_BUILD_USER="TS"
+export KBUILD_BUILD_HOST=stormbreaker
+export KBUILD_BUILD_USER="stormCI"
 
 # Build
 cd "$KERNEL_DIR"
@@ -91,16 +91,10 @@ git clone -b $2 https://github.com/stormbreaker-project/AnyKernel3
 cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 cd AnyKernel3 && make normal > /dev/null 2>&1
 
-# Make a github release.
-export UPLOAD_PATH="$PROJECT_DIR/upload/"
-export ZIP_FILE="$KERNEL_DIR/AnyKernel3/S*.zip"
-cd $PROJECT_PATH
-mkdir upload
-go get -u github.com/tcnksm/ghr
-cp $ZIP_FILE $UPLOAD_PATH
-ghr -t ${GITHUB_TOKEN} -u stormbreaker-project -r release-test -n "Latest Test Release for $(echo $2)" -b "$2"  -c 12345  ${UPLOAD_PATH}
+ZIP=$(echo *.zip)
+curl -F chat_id="${CHAT_ID}" -F document=@"$ZIP" "https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument"
 
 #Cleanup
-rm -rf $KERNEL_DIR $UNZIP_DIR
-rm -rf $PROJECT_DIR/input
-rm -rf $PROJECT_DIR/kernels
+rm -rf "$KERNEL_DIR" "$UNZIP_DIR"
+rm -rf "$PROJECT_DIR/input"
+rm -rf "$PROJECT_DIR/kernels"
