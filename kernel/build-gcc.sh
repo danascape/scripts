@@ -1,4 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Copyright (C) 2020 Saalim Quadri (iamsaalim)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# Script to build kernel using gcc
+# With Telegram push support
+
 git clone https://github.com/arter97/arm64-gcc --depth=1
 git clone https://github.com/arter97/arm32-gcc --depth=1
 git clone https://github.com/iamsaalim/AnyKernel3

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Copyright (C) 2018 Abubakar Yagob (blacksuan19)
 # Copyright (C) 2018 Rama Bondan Prakoso (rama982)
 # Copyright (C) 2020 Saalim Quadri (iamsaalim)
@@ -34,8 +35,8 @@ export SUBARCH=arm64
 export PATH=/usr/lib/ccache:$PATH
 export CROSS_COMPILE
 export CROSS_COMPILE_ARM32
-export KBUILD_BUILD_USER=saalim
-export KBUILD_BUILD_HOST=hetzner
+export KBUILD_BUILD_USER="danascape"
+export KBUILD_BUILD_HOST="StormCI"
 
 # initialise stormbreaker logo
 echo -e "             ,:\                       ";
