@@ -24,15 +24,15 @@ if [ -z ${1} ] || [ -z ${2} ] ; then
 fi
 
 # Clone up the source (well)
-git clone $ORG/$1 -b $2 $KERNEL_DIR || echo "Your device is not officially supported"
+git clone $ORG/$1 -b $2 $KERNEL_DIR/$1 --depth 1 || echo "Your device is not officially supported"
 
 # Find defconfig
 echo "Checking if defconfig exist ($1)"
 
-if [ -f $KERNEL_DIR/arch/arm64/configs/$1-perf_defconfig ]
+if [ -f $KERNEL_DIR/$1/arch/arm64/configs/$1-perf_defconfig ]
 then
     echo "Starting build"
-elif [ -f $KERNEL_DIR/arch/arm64/configs/vendor/$1-perf_defconfig ]
+elif [ -f $KERNEL_DIR/$1/arch/arm64/configs/vendor/$1-perf_defconfig ]
 then
     echo "Starting build"
 else
@@ -55,19 +55,19 @@ export KBUILD_BUILD_USER="stormCI"
 export KBUILD_COMPILER_STRING="${TOOLCHAIN}/clang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')";
 
 # Build
-cd "$KERNEL_DIR
+cd "$KERNEL_DIR/$1"
 
-if [ -f $KERNEL_DIR/arch/arm64/configs/$1-perf_defconfig ]
+if [ -f $KERNEL_DIR/$1/arch/arm64/configs/$1-perf_defconfig ]
 then
      make O=out ARCH=arm64 $1-perf_defconfig > /dev/null 2>&1
-elif [ -f $KERNEL_DIR/arch/arm64/configs/vendor/$1-perf_defconfig ]
+elif [ -f $KERNEL_DIR/$1/arch/arm64/configs/vendor/$1-perf_defconfig ]
 then
     make O=out ARCH=arm64 vendor/$1-perf_defconfig > /dev/null 2>&1
 fi
 
 make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- > logs.txt
 
-if [ -f $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb ]
+if [ -f $KERNEL_DIR/$1/out/arch/arm64/boot/Image.gz-dtb ]
 then
     echo "Build Complete"
 else
@@ -79,7 +79,7 @@ fi
 
 # Clone Anykernel
 git clone -b $1 https://github.com/stormbreaker-project/AnyKernel3
-cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
+cp $KERNEL_DIR/$1/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 cd AnyKernel3 && make normal > /dev/null 2>&1
 
 ZIP=$(echo *.zip)
@@ -87,4 +87,4 @@ curl -F chat_id="${CHAT_ID}" -F document=@"$ZIP" "https://api.telegram.org/bot${
 echo "Join @Stormbreakerci to get your builld"
 
 # Cleanup
-rm -rf "$KERNEL_DIR"
+rm -rf "$KERNEL_DIR/$1"
