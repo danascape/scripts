@@ -1,7 +1,7 @@
-build/build_kernel.sh
 drivers/drivers.sh
 kernel/build-proton.sh
 kernel/build-kernelmod.sh
 kernel/build-aospclang.sh
 kernel/build-gcc.sh
 kernel/build-kernelall.sh
+kernel/build_kernelwzip.sh
