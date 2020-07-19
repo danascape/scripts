@@ -87,4 +87,4 @@ curl -F chat_id="${CHAT_ID}" -F document=@"$ZIP" "https://api.telegram.org/bot${
 echo "Join @Stormbreakerci to get your builld"
 
 # Cleanup
-rm -rf "$KERNEL_DIR/$1"
+rm -rf "$KERNEL_DIR"
