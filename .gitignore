@@ -1,6 +1,5 @@
 # Dirs by script
 
-input/
+kernelsource/
+toolchain/
 working/
-kernels/
-upload/
