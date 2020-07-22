@@ -65,7 +65,14 @@ then
     make O=out ARCH=arm64 vendor/$1-perf_defconfig > /dev/null 2>&1
 fi
 
-make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- > logs.txt
+KERNEL_VERSION="$( cat Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
+if [ $KERNEL_VERSION=4.14 ]
+then
+     PATH="${TOOLCHAIN}/clang/bin:${PATH}"
+     make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CC=clang AR=llvm-ar OBJDUMP=llvm-objdump STRIP=llvm-strip NM=llvm-nm OBJCOPY=llvm-objcopy LD=ld.lld > logs.txt
+else
+     make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- > logs.txt
+fi
 
 if [ -f $KERNEL_DIR/$1/out/arch/arm64/boot/Image.gz-dtb ]
 then
@@ -74,7 +81,7 @@ else
     echo "Build Failed. Uploading logs"
     curl -F chat_id="${CHAT_ID}"  \
                     -F document=@"logs.txt" \
-                    https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument
+                    https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument > /dev/null 2>&1
 fi
 
 # Clone Anykernel
