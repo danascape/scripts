@@ -45,7 +45,6 @@ echo "Checking if toolchains exist"
 git clone --depth=1 https://github.com/stormbreaker-project/aarch64-linux-android-4.9 $TOOLCHAIN/gcc
 git clone --depth=1 https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 $TOOLCHAIN/gcc_32
 git clone --depth 1 https://github.com/stormbreaker-project/stormbreaker-clang $TOOLCHAIN/clang
-echo "Toolchains cloned"
 
 # Set Env
 PATH="${TOOLCHAIN}/clang/bin:${TOOLCHAIN}/gcc/bin:${TOOLCHAIN}/gcc_32/bin:${PATH}"
@@ -56,6 +55,7 @@ export KBUILD_COMPILER_STRING="${TOOLCHAIN}/clang/bin/clang --version | head -n 
 
 # Build
 cd "$KERNEL_DIR/$1"
+echo "Started Build"
 
 if [ -f $KERNEL_DIR/$1/arch/arm64/configs/$1-perf_defconfig ]
 then
@@ -82,6 +82,7 @@ else
     curl -F chat_id="${CHAT_ID}"  \
                     -F document=@"logs.txt" \
                     https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument > /dev/null 2>&1
+    exit 1
 fi
 
 # Clone Anykernel
