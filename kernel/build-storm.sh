@@ -65,8 +65,8 @@ then
     make O=out ARCH=arm64 vendor/$1-perf_defconfig > /dev/null 2>&1
 fi
 
-KERNEL_VERSION="$( cat Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
-if [ $KERNEL_VERSION=4.14 ]
+KERNEL_PATCHLEVEL="$( cat Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
+if [[ "$KERNEL_PATCHLEVEL" == "14" ]];
 then
      PATH="${TOOLCHAIN}/clang/bin:${PATH}"
      make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CC=clang AR=llvm-ar OBJDUMP=llvm-objdump STRIP=llvm-strip NM=llvm-nm OBJCOPY=llvm-objcopy LD=ld.lld > logs.txt
