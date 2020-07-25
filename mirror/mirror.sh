@@ -20,21 +20,23 @@ fi
 if [[ "$1" == *"http"* ]]; then
     echo "Downloading file"
     cd $WORK_DIR
-    aria2c -q -s 16 -x 16 "$1" -d $WORK_DIR || { echo "Download failed!"; }
-    URL=$WORK_DIR/${FILE}
-    [[ -e ${URL} ]] && du -sh ${URL}
+    START=$(date +"%s")
+    aria2c -q -s 16 -x 16 "$1" -d $WORK_DIR || { echo "Download failed!"; rm -rf "$WORK_DIR/"; exit 1;}
+    END=$(date +"%s")
+    TIME="$(($END - $START))"
+    echo "Download took "$TIME" seconds"
 else
-    URL=$( realpath "$1" )
-    echo "Copying file"
-    cp -a ${1} $WORK_DIR/
+    echo "Input link is not valid."
+    exit 1
 fi
 
 # Push
 cd $WORK_DIR
 FILE=$(echo *)
+du -sh $FILE
 rclone copy $FILE gdrive:
 LINK=$(rclone link gdrive:$FILE)
-echo $LINK
+echo mirrors.tesla59.workers.dev/$FILE
 
 # Cleanup
 rm -rf $WORK_DIR
