@@ -21,7 +21,7 @@ if [[ "$1" == *"http"* ]]; then
     echo "Downloading file"
     cd $WORK_DIR
     START=$(date +"%s")
-    aria2c -q -s 16 -x 16 "$1" -d $WORK_DIR || { echo "Download failed!"; rm -rf "$WORK_DIR/"; exit 1;}
+    aria2c --console-log-level=warn -s 16 -x 16 "$1" -d $WORK_DIR || { echo "Download failed!"; rm -rf "$WORK_DIR/"; exit 1;}
     END=$(date +"%s")
     TIME="$(($END - $START))"
     echo "Download took "$TIME" seconds"
