@@ -24,7 +24,8 @@ if [ -z ${1} ] || [ -z ${2} ] ; then
 fi
 
 # Clone up the source (well)
-git clone $ORG/$1 -b $2 $KERNEL_DIR/$1 --depth 1 || echo "Your device is not officially supported"
+echo "Cloning"
+git clone $ORG/$1 -b $2 $KERNEL_DIR/$1 --depth 1 || { echo "Your device is not officially supported or wrong branch"; exit 1; rm -rf $PROJECT_DIR/kernelsource;}
 
 # Find defconfig
 echo "Checking if defconfig exist ($1)"
@@ -37,6 +38,7 @@ then
     echo "Starting build"
 else
     echo "Defconfig not found"
+    rm -rf "$KERNEL_DIR"
     exit 1
 fi
 
@@ -66,7 +68,7 @@ then
 fi
 
 KERNEL_PATCHLEVEL="$( cat Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
-if [[ "$KERNEL_PATCHLEVEL" == "14" ]];
+if [[ "$1" == "phoenix" ]];
 then
      PATH="${TOOLCHAIN}/clang/bin:${PATH}"
      make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CC=clang AR=llvm-ar OBJDUMP=llvm-objdump STRIP=llvm-strip NM=llvm-nm OBJCOPY=llvm-objcopy LD=ld.lld > logs.txt
@@ -82,6 +84,7 @@ else
     curl -F chat_id="${CHAT_ID}"  \
                     -F document=@"logs.txt" \
                     https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument > /dev/null 2>&1
+    rm -rf "$KERNEL_DIR"
     exit 1
 fi
 
