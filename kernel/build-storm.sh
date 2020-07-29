@@ -91,11 +91,26 @@ fi
 # Clone Anykernel
 git clone -b $1 https://github.com/stormbreaker-project/AnyKernel3
 cp $KERNEL_DIR/$1/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
+
+# Build dtbo
+if [ -f $KERNEL_DIR/$1/out/arch/arm64/boot/dts/xiaomi/*.dtbo ]
+then
+    echo "Building DTBO"
+    git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt > /dev/null 2>&1
+
+if [[ "$1" == "phoenix" ]];
+then
+    python scripts/ufdt/libufdt/utils/src/mkdtboimg.py create AnyKernel3/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/xiaomi/phoenix-sdmmagpie-overlay.dtbo > /dev/null 2>&1
+else
+    python scripts/ufdt/libufdt/utils/src/mkdtboimg.py create AnyKernel3/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/qcom/*.dtbo > /dev/null 2>&1
+fi
+fi
+
 cd AnyKernel3 && make normal > /dev/null 2>&1
 
 ZIP=$(echo *.zip)
 curl -F chat_id="${CHAT_ID}" -F document=@"$ZIP" "https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument" > /dev/null 2>&1
-echo "Join @Stormbreakerci to get your builld"
+echo "Join @Stormbreakerci to get your build"
 
 # Cleanup
 rm -rf "$KERNEL_DIR"
