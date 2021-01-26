@@ -26,8 +26,8 @@ SRCDIR="$PWD/"
 MODULEDIR="$PWD/AnyKernel3/modules/vendor/lib/modules/"
 PRIMA="$PWD/AnyKernel3/modules/vendor/lib/modules/wlan.ko"
 PRONTO="$PWD/AnyKernel3/modules/vendor/lib/modules/pronto/pronto_wlan.ko"
-STRIP="$PWD/gcc/bin/$(echo "$(find "$PWD/gcc/bin" -type f -name "aarch64-*-gcc")" | awk -F '/' '{print $NF}' |\
-			sed -e 's/gcc/strip/')"
+STRIP="$PWD/gcc/bin/$(echo "$(find "$PWD/gcc/bin" -type f -name "aarch64-*-gcc")" | awk -F '/' '{print $NF}' |
+	sed -e 's/gcc/strip/')"
 
 # Export
 export ARCH=arm64
@@ -39,12 +39,12 @@ export KBUILD_BUILD_USER="danascape"
 export KBUILD_BUILD_HOST="StormCI"
 
 # initialise stormbreaker logo
-echo -e "             ,:\                       ";
-echo -e "            //  \_()  ___              ";
-echo -e "           ||   |    |   ||            ";
-echo -e "           ||   |    |   ||            ";
-echo -e "           ||   |____|___||            ";
-echo -e "            \\  / ||                   ";
+echo -e "             ,:\                       "
+echo -e "            //  \_()  ___              "
+echo -e "           ||   |    |   ||            "
+echo -e "           ||   |    |   ||            "
+echo -e "           ||   |____|___||            "
+echo -e "            \\  / ||                   "
 echo -e "             `:/  ||                   ";
 echo -e "                  ||                   ";
 echo -e "                  ||                   ";
@@ -54,6 +54,7 @@ echo -e "                  XX                   ";
 echo -e "                  XX                   ";
 echo -e "                  OO                   ";
 echo -e "                  `'                   ";
+
 
 # Main script
 while true; do
@@ -69,13 +70,14 @@ while true; do
 	if [ "$choice" == "1" ]; then
 		echo -e "\n(i) Cloning toolcahins if folder not exist..."
 		git clone https://github.com/stormbreaker-project/aarch64-linux-android-4.9 --depth 1 gcc
-                git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 1 gcc32
+		git clone https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 --depth 1 gcc32
 		echo -e ""
-		make  O=out $CONFIG $THREAD &>/dev/null
-		make  O=out $THREAD & pid=$!
+		make O=out $CONFIG $THREAD &>/dev/null
+		make O=out $THREAD &
+		pid=$!
 
 		BUILD_START=$(date +"%s")
-		DATE=`date`
+		DATE=$(date)
 
 		echo -e "\n#######################################################################"
 
@@ -86,10 +88,8 @@ while true; do
 		spin[2]="|"
 		spin[3]="/"
 		echo -ne "\n[Please wait...] ${spin[0]}"
-		while kill -0 $pid &>/dev/null
-		do
-			for i in "${spin[@]}"
-			do
+		while kill -0 $pid &>/dev/null; do
+			for i in "${spin[@]}"; do
 				echo -ne "\b$i"
 				sleep 0.1
 			done
@@ -138,7 +138,7 @@ while true; do
 
 	if [ "$choice" == "4" ]; then
 		echo -e "\n#######################################################################"
-        echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
+		echo -e "\n(i) Cloning AnyKernel3 if folder not exist..."
 		git clone -b X00P https://github.com/stormbreaker-project/AnyKernel3
 		echo -e "\n(i) Strip and move modules to AnyKernel3..."
 
@@ -148,18 +148,19 @@ while true; do
 		make clean &>/dev/null
 		cd ..
 
-		for MOD in $(find "${OUTDIR}" -name '*.ko') ; do
-			"${STRIP}" --strip-unneeded --strip-debug "${MOD}" &> /dev/null
+		for MOD in $(find "${OUTDIR}" -name '*.ko'); do
+			"${STRIP}" --strip-unneeded --strip-debug "${MOD}" &>/dev/null
 			"${SRCDIR}"/scripts/sign-file sha512 \
-					"${OUTDIR}/signing_key.priv" \
-					"${OUTDIR}/signing_key.x509" \
-					"${MOD}"
+				"${OUTDIR}/signing_key.priv" \
+				"${OUTDIR}/signing_key.x509" \
+				"${MOD}"
 			find "${OUTDIR}" -name '*.ko' -exec cp {} "${MODULEDIR}" \;
 			case ${MOD} in
-				*/wlan.ko)
-					cp -ar "${MOD}" "${PRIMA}"
-					cp -ar "${MOD}" "${PRONTO}"
-					cp -ar "${MOD}" "{MODULEDIR}"
+			*/wlan.ko)
+				cp -ar "${MOD}" "${PRIMA}"
+				cp -ar "${MOD}" "${PRONTO}"
+				cp -ar "${MOD}" "{MODULEDIR}"
+				;;
 			esac
 		done
 		echo -e "\n(i) Done moving modules"

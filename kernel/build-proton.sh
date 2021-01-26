@@ -23,14 +23,14 @@ export KBUILD_BUILD_HOST="StormCI"
 make O=out ARCH=arm64 X00P_defconfig
 
 make -j$(nproc --all) O=out \
-                      ARCH=arm64 \
-                      CC=clang \
-                      CLANG_TRIPLE=aarch64-linux-gnu- \
-                      CROSS_COMPILE=aarch64-linux-gnu- \
-                      CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
-                      LLVM="llvm-" \
-                      AR=llvm-ar \
-                      NM=llvm-nm \
-                      OBJCOPY=llvm-objcopy \
-                      OBJDUMP=llvm-objdump \
-                      STRIP=llvm-strip
+	ARCH=arm64 \
+	CC=clang \
+	CLANG_TRIPLE=aarch64-linux-gnu- \
+	CROSS_COMPILE=aarch64-linux-gnu- \
+	CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+	LLVM="llvm-" \
+	AR=llvm-ar \
+	NM=llvm-nm \
+	OBJCOPY=llvm-objcopy \
+	OBJDUMP=llvm-objdump \
+	STRIP=llvm-strip

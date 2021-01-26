@@ -11,23 +11,27 @@ WORK_DIR="$PROJECT_DIR/working"
 mkdir -p "$PROJECT_DIR/working"
 
 # Arguements check
-if [ -z ${1} ] ; then
-    echo -e "Usage: bash mirror.sh <direct-link>"
-    exit 1
+if [ -z ${1} ]; then
+	echo -e "Usage: bash mirror.sh <direct-link>"
+	exit 1
 fi
 
 # Download compressed kernel source
 if [[ "$1" == *"http"* ]]; then
-    echo "Downloading file"
-    cd $WORK_DIR
-    START=$(date +"%s")
-    aria2c --console-log-level=warn -s 16 -x 16 "$1" -d $WORK_DIR || { echo "Download failed!"; rm -rf "$WORK_DIR/"; exit 1;}
-    END=$(date +"%s")
-    TIME="$(($END - $START))"
-    echo "Download took "$TIME" seconds"
+	echo "Downloading file"
+	cd $WORK_DIR
+	START=$(date +"%s")
+	aria2c --console-log-level=warn -s 16 -x 16 "$1" -d $WORK_DIR || {
+		echo "Download failed!"
+		rm -rf "$WORK_DIR/"
+		exit 1
+	}
+	END=$(date +"%s")
+	TIME="$(($END - $START))"
+	echo "Download took "$TIME" seconds"
 else
-    echo "Input link is not valid."
-    exit 1
+	echo "Input link is not valid."
+	exit 1
 fi
 
 # Push
