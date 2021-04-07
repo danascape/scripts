@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982)
+# Copyright (C) 2020-21 Saalim Quadri <saalim.priv@gmail.com>
 #
 # Scripts to merge / upstream kernel drivers (wifi and audio)
 #
@@ -53,7 +54,7 @@ for REPO in "${REPOS_WLAN[@]}"; do
 		git commit --no-edit -m "staging: ${REPO}: Checkout at ${TAG}" -s
 	elif [[ -n ${UPDATE} ]]; then
 		git merge --no-edit -m "staging: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
-			-m "$(git log --oneline --no-merges $(git branch | grep "\*" | sed 's/\* //')..FETCH_HEAD)" \
+			-m "$(git log --oneline --no-merges "$(git branch | grep "\*" | sed 's/\* //')"..FETCH_HEAD)" \
 			-X subtree="${SUBFOLDER_WLAN}/${REPO}" --signoff FETCH_HEAD --signoff
 	fi
 done
@@ -76,7 +77,7 @@ for REPO in "${REPOS_AUDIO[@]}"; do
 		git commit --no-edit -m "techpack: ${REPO}: Checkout at ${TAG}" -s
 	elif [[ -n ${UPDATE} ]]; then
 		git merge --no-edit -m "techpack: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
-			-m "$(git log --oneline --no-merges $(git branch | grep "\*" | sed 's/\* //')..FETCH_HEAD)" \
+			-m "$(git log --oneline --no-merges "$(git branch | grep "\*" | sed 's/\* //')"..FETCH_HEAD)" \
 			-X subtree="${SUBFOLDER_AUDIO}" FETCH_HEAD --signoff
 	fi
 done

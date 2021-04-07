@@ -1,4 +1,4 @@
-drivers/drivers.sh
+drivers/merge-drivers.sh
 kernel/build-aospclang.sh
 kernel/build-gcc.sh
 kernel/build-kernelall.sh
