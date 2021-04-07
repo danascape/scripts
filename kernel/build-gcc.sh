@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (C) 2020 Saalim Quadri (iamsaalim)
+# Copyright (C) 2020 Saalim Quadri (danascape)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # Script to build kernel using gcc

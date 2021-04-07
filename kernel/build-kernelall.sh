@@ -3,7 +3,7 @@
 # Script For Building Android arm64 Kernel
 #
 # Copyright (c) 2018-2020 Panchajanya1999 <rsk52959@gmail.com>
-# Copyright (c) 2019-2020 iamsaalim <saalimquadri1@gmail.com>
+# Copyright (c) 2019-2020 danascape <saalimquadri1@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

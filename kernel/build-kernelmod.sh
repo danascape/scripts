@@ -2,7 +2,7 @@
 
 # Copyright (C) 2018 Abubakar Yagob (blacksuan19)
 # Copyright (C) 2018 Rama Bondan Prakoso (rama982)
-# Copyright (C) 2020 Saalim Quadri (iamsaalim)
+# Copyright (C) 2020 Saalim Quadri (danascape)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # Color
