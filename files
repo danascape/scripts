@@ -2,9 +2,9 @@ drivers/drivers.sh
 kernel/build-aospclang.sh
 kernel/build-gcc.sh
 kernel/build-kernelall.sh
-kernel/build-kernelmod.sh
+kernel/build_kernelwzip.sh
 kernel/build-proton.sh
 kernel/build-storm.sh
-kernel/build_kernelwzip.sh
+kernel/modules-strip.sh
 mirror/mirror.sh
 rom/rom.sh
