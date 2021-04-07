@@ -13,6 +13,7 @@ git clone --depth=1 https://github.com/stormbreaker-project/AnyKernel3 -b X00P
 echo "Done"
 GCC="$(pwd)/aarch64-linux-android-"
 TANGGAL=$(date +"%F-%S")
+TOKEN=""
 START=$(date +"%s")
 export CONFIG_PATH=$PWD/arch/arm64/configs/X00P_defconfig
 PATH="${PWD}/clang/bin:${PWD}/gcc/bin:${PWD}/gcc32/bin:${PATH}"
@@ -22,7 +23,7 @@ export KBUILD_BUILD_HOST="StormCI"
 
 # Send info to channel
 function sendinfo() {
-	curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+	curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendMessage" \
 		-d chat_id="$chat_id" \
 		-d "disable_web_page_preview=true" \
 		-d "parse_mode=html" \
@@ -33,7 +34,7 @@ function sendinfo() {
 function push() {
 	cd AnyKernel3
 	ZIP=$(echo *.zip)
-	curl -F document=@$ZIP "https://api.telegram.org/bot$token/sendDocument" \
+	curl -F document=@$ZIP "https://api.telegram.org/bot$TOKEN/sendDocument" \
 		-F chat_id="$chat_id" \
 		-F "disable_web_page_preview=true" \
 		-F "parse_mode=html" \
@@ -42,7 +43,7 @@ function push() {
 
 # spam Error
 function finerr() {
-	curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+	curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendMessage" \
 		-d chat_id="$chat_id" \
 		-d "disable_web_page_preview=true" \
 		-d "parse_mode=markdown" \
