@@ -27,10 +27,6 @@ for MOD in $(find "${OUTDIR}" -name '*.ko'); do
 		"${OUTDIR}/signing_key.x509" \
 		"${MOD}"
 	find "${OUTDIR}" -name '*.ko' -exec cp {} "${MODULEDIR}" \;
-	case ${MOD})
-		cp -ar "${MOD}" "{MODULEDIR}"
-		;;
-	esac
 done
 
 echo -e "\n Done moving modules"
