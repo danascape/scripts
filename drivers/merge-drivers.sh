@@ -3,9 +3,9 @@
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982)
 # Copyright (C) 2020-21 Saalim Quadri <saalim.priv@gmail.com>
 #
-# Scripts to merge / upstream kernel drivers (audio, camera, wifi)
+# Scripts to merge / upstream kernel drivers (audio, camera, display, video, wifi)
 #
-# for msm-4.4+
+# for msm-3.18+
 #
 # Kanged from gist.github.com/nathanchance/072a16428f592b76e7f025ccd1bb01ae
 
@@ -13,8 +13,10 @@ while ((${#})); do
 	case ${1} in
 	"-a" | "--audio") AUDIO=true ;;
 	"-c" | "--camera") CAMERA=true ;;
+	"-d" | "--display") DISPLAY=true ;;
 	"-i" | "--init") INIT=true ;;
 	"-p" | "--prima") PRIMA=true ;;
+	"-v" | "--video") VIDEO=true ;;
 	"-t" | "--tag")
 		shift
 		TAG=${1}
@@ -103,5 +105,51 @@ for REPO in "${REPOS_CAMERA[@]}"; do
 		git merge --no-edit -m "techpack: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
 			-m "$(git log --oneline --no-merges "$(git branch | grep "\*" | sed 's/\* //')"..FETCH_HEAD)" \
 			-X subtree="${SUBFOLDER_CAMERA}" FETCH_HEAD --signoff
+	fi
+done
+
+[[ -z ${DISPLAY} ]] && { exit; }
+
+SUBFOLDER_DISPLAY=techpack/display
+REPOS_DISPLAY=("display-drivers")
+URL_DISPLAY=https://source.codeaurora.org/quic/la/platform/vendor/opensource/
+
+for REPO in "${REPOS_DISPLAY[@]}"; do
+	echo "${REPO}"
+	if ! git ls-remote --exit-code "${REPO}" &>/dev/null; then
+		git remote add "${REPO}" "${URL_DISPLAY}${REPO}"
+	fi
+	git fetch "${REPO}" "${TAG}"
+	if [[ -n ${INIT} ]]; then
+		git merge --allow-unrelated-histories -s ours --no-commit FETCH_HEAD
+		git read-tree --prefix="${SUBFOLDER_DISPLAY}" -u FETCH_HEAD
+		git commit --no-edit -m "techpack: ${REPO}: Checkout at ${TAG}" -s
+	elif [[ -n ${UPDATE} ]]; then
+		git merge --no-edit -m "techpack: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
+			-m "$(git log --oneline --no-merges "$(git branch | grep "\*" | sed 's/\* //')"..FETCH_HEAD)" \
+			-X subtree="${SUBFOLDER_DISPLAY}" FETCH_HEAD --signoff
+	fi
+done
+
+[[ -z ${VIDEO} ]] && { exit; }
+
+SUBFOLDER_VIDEO=techpack/video
+REPOS_VIDEO=("video-driver")
+URL_VIDEO=https://source.codeaurora.org/quic/la/platform/vendor/opensource/
+
+for REPO in "${REPOS_VIDEO[@]}"; do
+	echo "${REPO}"
+	if ! git ls-remote --exit-code "${REPO}" &>/dev/null; then
+		git remote add "${REPO}" "${URL_VIDEO}${REPO}"
+	fi
+	git fetch "${REPO}" "${TAG}"
+	if [[ -n ${INIT} ]]; then
+		git merge --allow-unrelated-histories -s ours --no-commit FETCH_HEAD
+		git read-tree --prefix="${SUBFOLDER_VIDEO}" -u FETCH_HEAD
+		git commit --no-edit -m "techpack: ${REPO}: Checkout at ${TAG}" -s
+	elif [[ -n ${UPDATE} ]]; then
+		git merge --no-edit -m "techpack: ${REPO}: Merge tag '${TAG}' into $(git rev-parse --abbrev-ref HEAD)" \
+			-m "$(git log --oneline --no-merges "$(git branch | grep "\*" | sed 's/\* //')"..FETCH_HEAD)" \
+			-X subtree="${SUBFOLDER_VIDEO}" FETCH_HEAD --signoff
 	fi
 done
