@@ -6,5 +6,4 @@ kernel/build_kernelwzip.sh
 kernel/build-proton.sh
 kernel/build-storm.sh
 kernel/modules-strip.sh
-mirror/mirror.sh
-rom/rom.sh
+rom/build-rom.sh
