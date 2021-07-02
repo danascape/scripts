@@ -1,9 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+# Copyright (C) 2019 Saalim Quadri <danascape@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-or-later
-#
-# Copyright (C) 2020-21 Saalim Quadri <saalim.priv@gmail.com>
-#
 
 # Arguements check
 if [ -z ${1} ] || [ -z ${2} ] || [ -z ${3} ] || [ -z ${4} ]; then
@@ -11,17 +9,14 @@ if [ -z ${1} ] || [ -z ${2} ] || [ -z ${3} ] || [ -z ${4} ]; then
 	exit 1
 fi
 
-# Store some VARS
-BOT_API_TOKEN=
-CHAT_ID=
+# Store variables
+BOT_API_TOKEN=""
+CHAT_ID=""
 DEVICE="$2"
 PACKAGE_NAME="$4"
 ROM="$1"
 ROM_DIR="$PWD" # By default
 VARIANT="$3"
-
-# Go to source
-cd "$ROM_DIR"
 
 # Check envsetup
 if [ -f $ROM_DIR/build/envsetup.sh ]; then
@@ -36,7 +31,7 @@ fi
 lunch $ROM_$DEVICE-$VARIANT | grep TARGET_PRODUCT
 
 # Start the build
-make $PACKAGE_NAME -j$(nproc --all) >logs.txt
+make $PACKAGE_NAME -j$(nproc --all) |& tee buildlogs.txt
 
 # Check if build is done
 if [ -f $ROM_DIR/out/target/product/$DEVICE/*.zip ]; then
@@ -47,7 +42,7 @@ if [ -f $ROM_DIR/out/target/product/$DEVICE/*.zip ]; then
 else
 	echo "Build failed, Uploading logs"
 	curl -F chat_id="${CHAT_ID}" \
-		-F document=@"logs.txt" \
+		-F document=@"buildlogs.txt" \
 		https://api.telegram.org/bot${BOT_API_TOKEN}/sendDocument >/dev/null 2>&1
 	exit 1
 fi
