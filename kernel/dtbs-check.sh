@@ -11,17 +11,21 @@ if [ -z ${1} ]; then
 fi
 
 # Store Variables
+# The path of the DT_SCHEMA from kernel source home
 DT_FILE=$1
+
+# The path to the kernel source
 KERNEL_DIR="/home/saalim/testing/linux"
 
-# Run tests on arm architecture
-cd $KERNEL_DIR
-make -j8 O=out/arm ARCH=arm defconfig
-make -j8 O=out/arm ARCH=arm dt_binding_check DT_SCHEMA_FILES=$DT_FILE
-make -j8 O=out/arm ARCH=arm dtbs_check DT_SCHEMA_FILES=$DT_FILE
+# Architecture to run the test on
+ARCH="arm arm64"
 
-# RUn tests on arm64 architecture
+# Change to kernel source directory
 cd $KERNEL_DIR
-make -j8 O=out/arm64 ARCH=arm64 defconfig
-make -j8 O=out/arm64 ARCH=arm64 dt_binding_check DT_SCHEMA_FILES=$DT_FILE
-make -j8 O=out/arm64 ARCH=arm64 dtbs_check DT_SCHEMA_FILES=$DT_FILE
+
+# Run tests
+for arch in $ARCH; do
+	make -j8 O=out/$arch ARCH=$arch defconfig
+	make -j8 O=out/$arch ARCH=$arch dt_binding_check DT_SCHEMA_FILES=$DT_FILE
+	make -j8 O=out/$arch ARCH=$arch dtbs_check DT_SCHEMA_FILES=$DT_FILE
+done
