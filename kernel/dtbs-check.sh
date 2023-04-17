@@ -25,7 +25,7 @@ cd $KERNEL_DIR
 
 # Run tests
 for arch in $ARCH; do
-	make -j8 O=out/$arch ARCH=$arch defconfig
-	make -j8 O=out/$arch ARCH=$arch dt_binding_check DT_SCHEMA_FILES=$DT_FILE
-	make -j8 O=out/$arch ARCH=$arch dtbs_check DT_SCHEMA_FILES=$DT_FILE
+	make -j$(nproc --all) O=out/$arch ARCH=$arch defconfig
+	make -j$(nproc --all) O=out/$arch ARCH=$arch dt_binding_check DT_SCHEMA_FILES=$DT_FILE
+	make -j$(nproc --all) O=out/$arch ARCH=$arch dtbs_check DT_SCHEMA_FILES=$DT_FILE
 done
