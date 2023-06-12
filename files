@@ -1,2 +1,3 @@
 build/build-rom.sh
 kernel/dtbs-check.sh
+setup/functions
