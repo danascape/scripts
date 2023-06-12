@@ -6,6 +6,7 @@
 git_alias() {
 	git config --global alias.a 'add'
 	git config --global alias.c 'commit'
+	git config --global alias.cp 'cherry-pick'
 	git config --global alias.f 'fetch'
 	git config --global alias.s 'status'
 }
