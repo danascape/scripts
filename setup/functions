@@ -19,6 +19,10 @@ git_alias() {
 . "$SCRIPTS_PATH"/telegram.config --source-only
 
 # Set tg var.
-function sendTG() {
+sendTG() {
 	curl -s "https://api.telegram.org/bot$API_KEY/sendmessage" --data "text=${*}&chat_id="$CHAT_ID"&parse_mode=HTML" >/dev/null
+}
+
+pushTG() {
+	curl -F chat_id="$CHAT_ID" -F document=@"${*}" "https://api.telegram.org/bot${API_KEY}/sendDocument"
 }
