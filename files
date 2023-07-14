@@ -1,4 +1,5 @@
 build/build-rom.sh
 kernel/dtbs-check.sh
+kernel/kernel_functions.sh
 setup/build_env.sh
 setup/functions
