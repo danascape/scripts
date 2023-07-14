@@ -14,14 +14,19 @@ fi
 # The path of the DT_SCHEMA from kernel source home
 DT_FILE="$1"
 
-# The path to the kernel source
-KERNEL_DIR="/home/saalim/testing/linux"
+# Scripts Path
+export SCRIPTS_PATH="$HOME/scripts"
+
+# Inherit extra kernel functions
+. "SCRIPTS_PATH"/kernel/kernel_functions.sh --source-only
+
+if ! is_kernel_root "$PWD"; then
+	echo "error: Execute this command in a kernel tree."
+	exit 125
+fi
 
 # Architecture to run the test on
 ARCH="arm arm64"
-
-# Change to kernel source directory
-cd $KERNEL_DIR || exit 1
 
 # Run tests
 for arch in $ARCH; do
