@@ -20,7 +20,7 @@ git_alias() {
 
 # Set tg var.
 sendTG() {
-	curl -s "https://api.telegram.org/bot$API_KEY/sendmessage" --data "text=${*}&chat_id="$CHAT_ID"&parse_mode=HTML" >/dev/null
+	curl -s "https://api.telegram.org/bot${API_KEY}/sendmessage" --data "text=${*}&chat_id=$CHAT_ID&parse_mode=HTML" >/dev/null
 }
 
 pushTG() {
