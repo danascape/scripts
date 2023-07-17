@@ -7,10 +7,9 @@ sudo apt update
 
 sudo DEBIAN_FRONTEND=noninteractive \
 	apt install -y \
-	build-essential bc python curl \
+	build-essential bc python3 curl \
 	git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi \
 	libssl-dev lftp zstd wget libelf-dev libfl-dev clang flex bison cpio \
 	libyaml-dev golang-go python3-pip
 
-PYTHON_PACKAGES="dtschema yamllint"
-pip3 install "$PYTHON_PACKAGES"
+pip3 install dtschema yamllint
