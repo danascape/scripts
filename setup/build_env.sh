@@ -10,6 +10,7 @@ sudo DEBIAN_FRONTEND=noninteractive \
 	build-essential bc python curl \
 	git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi \
 	libssl-dev lftp zstd wget libelf-dev libfl-dev clang flex bison cpio \
-	libyaml-dev golang-go
+	libyaml-dev golang-go python3-pip
 
- PYTHON_PACKAGES="dtschema"
+PYTHON_PACKAGES="dtschema yamllint"
+pip3 install "$PYTHON_PACKAGES"
