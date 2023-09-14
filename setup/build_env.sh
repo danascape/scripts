@@ -10,6 +10,6 @@ sudo DEBIAN_FRONTEND=noninteractive \
 	build-essential bc python3 curl \
 	git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi \
 	libssl-dev lftp zstd wget libelf-dev libfl-dev clang flex bison cpio \
-	libyaml-dev golang-go python3-pip
+	libyaml-dev golang-go python3-pip swig
 
 pip3 install dtschema yamllint
