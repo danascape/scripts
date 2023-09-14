@@ -15,4 +15,4 @@ case "$argument" in
 	;;
 esac
 
-qemu-system-x86_64 -M pc -kernel $kernel -drive $drive_args -append "rootwait root=/dev/vda console=tty1 console=ttyS0" -net nic,model=virtio -net user -serial stdio -display none -m 2048M,slots=2,maxmem=2176M ${EXTRA_ARGS}
+qemu-system-x86_64 -M pc -kernel $kernel -drive $drive_args -append "rootwait root=/dev/vda console=tty1 console=ttyS0" -net nic,model=virtio -net user -serial stdio -display none -m 2048M,slots=2,maxmem=2176M "${EXTRA_ARGS}"
