@@ -26,3 +26,7 @@ sendTG() {
 pushTG() {
 	curl -F chat_id="$CHAT_ID" -F document=@"${*}" "https://api.telegram.org/bot${API_KEY}/sendDocument"
 }
+
+runqemu() {
+	qemu-system-x86_64 -kernel out/arch/x86_64/boot/bzImage -hda /dev/zero -append "root=/dev/zero console=ttyS0 nokaslr" -serial stdio -display none --initrd ../ramdisk.img
+}
