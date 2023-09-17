@@ -18,7 +18,7 @@ DT_FILE="$1"
 export SCRIPTS_PATH="$HOME/scripts"
 
 # Inherit extra kernel functions
-. "SCRIPTS_PATH"/kernel/kernel_functions.sh --source-only
+. "$SCRIPTS_PATH"/kernel/kernel_functions.sh --source-only
 
 if ! is_kernel_root "$PWD"; then
 	echo "error: Execute this command in a kernel tree."
