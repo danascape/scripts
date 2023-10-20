@@ -7,7 +7,8 @@
 # Scripts Path
 SCRIPTS_PATH="$HOME/scripts"
 
-git_alias() {
+git_alias()
+{
 	git config --global alias.a 'add'
 	git config --global alias.c 'commit'
 	git config --global alias.cp 'cherry-pick'
@@ -19,14 +20,17 @@ git_alias() {
 . "$SCRIPTS_PATH"/telegram.config --source-only
 
 # Set tg var.
-sendTG() {
-	curl -s "https://api.telegram.org/bot${API_KEY}/sendmessage" --data "text=${*}&chat_id=$CHAT_ID&parse_mode=HTML" >/dev/null
+sendTG()
+{
+	curl -s "https://api.telegram.org/bot${API_KEY}/sendmessage" --data "text=${*}&chat_id=$CHAT_ID&parse_mode=HTML" > /dev/null
 }
 
-pushTG() {
+pushTG()
+{
 	curl -F chat_id="$CHAT_ID" -F document=@"${*}" "https://api.telegram.org/bot${API_KEY}/sendDocument"
 }
 
-rq() {
+rq()
+{
 	. "$SCRIPTS_PATH"/qemu/start-qemu.sh "$@"
 }
