@@ -13,4 +13,4 @@ sudo DEBIAN_FRONTEND=noninteractive \
 	libyaml-dev golang-go python3-pip swig shellcheck jq shfmt \
 	qemu-system-x86
 
-pip3 install dtschema yamllint
+pip3 install dtschema yamllint python-magic flake8
