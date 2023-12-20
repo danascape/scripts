@@ -39,7 +39,7 @@ else
 	REPOS_WLAN=("prima")
 fi
 
-URL_WLAN=https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/
+URL_WLAN=https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/wlan/
 
 for REPO in "${REPOS_WLAN[@]}"; do
 	echo "${REPO}"
