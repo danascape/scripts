@@ -19,6 +19,12 @@ git_alias()
 # Call telegram config
 . "$SCRIPTS_PATH"/telegram.config --source-only
 
+# Set ROM Build options
+build_rom()
+{
+	. "$SCRIPTS_PATH"/build/build-rom.sh "$@"
+}
+
 # Set tg var.
 sendTG()
 {
