@@ -26,7 +26,7 @@ else
 fi
 
 # Lunch
-lunch "$ROM"_"$DEVICE"-"$VARIANT" | grep TARGET_PRODUCT
+lunch "$ROM"_"$DEVICE"-"$VARIANT"
 
 # Start the build
 make "$PACKAGE_NAME" -j"$(nproc --all)" |& tee buildlogs.txt
