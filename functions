@@ -29,6 +29,11 @@ build-rom()
 	. "$SCRIPTS_PATH"/build/build-rom.sh "$@"
 }
 
+check-dtbs()
+{
+	. "$SCRIPTS_PATH"/kernel/dtbs-check.sh "$@"
+}
+
 # Set tg var.
 sendTG()
 {
