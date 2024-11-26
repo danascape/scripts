@@ -5,7 +5,7 @@
 
 # Arguements check
 if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ] || [ -z "${4}" ]; then
-	echo -e "Usage: bash rom.sh <rom-name> <device-name> <variant> <package-name>"
+	echo -e "Usage: bash build-rom.sh <rom-name> <device-name> <variant> <package-name>"
 	exit 1
 fi
 
