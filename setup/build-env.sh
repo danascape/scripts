@@ -12,6 +12,7 @@ sudo DEBIAN_FRONTEND=noninteractive \
 	libssl-dev lftp zstd wget libelf-dev libfl-dev clang flex bison cpio \
 	libyaml-dev golang-go python3-pip swig shellcheck jq shfmt kpartx \
  	libnl-3-dev libnl-genl-3-dev libevent-dev libreadline-dev libsqlite3-dev libdevmapper-dev \
-	qemu-system-x86
+	qemu-system-x86 \
+ 	git-email
 
 pip3 install dtschema yamllint python-magic flake8
