@@ -30,6 +30,11 @@ setupKenv()
 	. "$SCRIPTS_PATH"/env/setup_kernel.sh "$@"
 }
 
+setupEmbenv()
+{
+	. "$SCRIPTS_PATH"/env/setup_emb.sh "$@"
+}
+
 # Set ROM Build options
 build-rom()
 {
