@@ -6,7 +6,7 @@
 # Arguements check
 if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
 	echo -e "Usage: bash build-rom.sh <device-name> <variant> <package-name>"
-	exit 1
+	return
 fi
 
 # Store variables
@@ -20,8 +20,8 @@ if [ -f "$ROM_DIR"/build/envsetup.sh ]; then
 	echo "Starting build"
 	source build/envsetup.sh
 else
-	echo "Either rom path is wrong or rom isnt synced"
-	exit 1
+	echo "build-ROM: Either rom path is wrong or rom isnt synced"
+	return
 fi
 
 # Lunch

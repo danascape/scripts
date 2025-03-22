@@ -38,7 +38,7 @@ setupEmbenv()
 # Set ROM Build options
 build-rom()
 {
-	. "$SCRIPTS_PATH"/build/build-rom.sh "$@"
+	. "$SCRIPTS_PATH"/aosp/build-rom.sh "$@"
 }
 
 check-dtbs()
