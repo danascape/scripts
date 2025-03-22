@@ -24,6 +24,12 @@ set-git-alias()
 # Call telegram config
 . "$SCRIPTS_PATH"/telegram.config --source-only
 
+# Setup Kernel/Embedded build env
+setupKenv()
+{
+	. "$SCRIPTS_PATH"/env/setup_kernel.sh "$@"
+}
+
 # Set ROM Build options
 build-rom()
 {
