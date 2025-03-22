@@ -1,5 +1,6 @@
 functions
 aosp/build-rom.sh
+env/setup_kernel.sh
 kernel/dtbs-check.sh
 kernel/kernel_functions.sh
 kernel/merge-drivers.sh
