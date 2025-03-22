@@ -23,3 +23,4 @@ bash $WORK_DIR/setup/build-env.sh
 echo "Artemis: Installing akhilnarang common packages"
 git clone --depth 1 -b master https://github.com/akhilnarang/scripts $WORK_DIR/akhil-scripts
 bash $WORK_DIR/akhil-scripts/setup/android_build_env.sh
+rm -rf $WORK_DIR/akhil-scripts
