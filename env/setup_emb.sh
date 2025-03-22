@@ -19,9 +19,9 @@ CURRENT_DIR="$PWD"
 if [ -d "$CURRENT_DIR"/../downloads ] || [ -d "$CURRENT_DIR"/../sstate-cache ]; then
 	echo "env: Setting cached dirs path"
 	eval export DL_DIR="$(pwd)"/../downloads/
-    eval export SSTATE_DIR="$(pwd)"/../sstate-cache/
+	eval export SSTATE_DIR="$(pwd)"/../sstate-cache/
 else
 	echo "env: Cached paths does not exist. Skipping!"
-    echo "env: Good luck! with clean build"
+	echo "env: Good luck! with clean build"
 	return
 fi
