@@ -4,17 +4,16 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # Arguements check
-if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ] || [ -z "${4}" ]; then
-	echo -e "Usage: bash build-rom.sh <rom-name> <device-name> <variant> <package-name>"
+if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
+	echo -e "Usage: bash build-rom.sh <device-name> <variant> <package-name>"
 	exit 1
 fi
 
 # Store variables
-DEVICE="$2"
-PACKAGE_NAME="$4"
-ROM="$1"
+DEVICE="$1"
+PACKAGE_NAME="$3"
 ROM_DIR="$PWD" # By default
-VARIANT="$3"
+VARIANT="$2"
 
 # Check envsetup
 if [ -f "$ROM_DIR"/build/envsetup.sh ]; then
@@ -26,7 +25,7 @@ else
 fi
 
 # Lunch
-lunch "$ROM"_"$DEVICE"-"$VARIANT"
+breakfast "$DEVICE" "$VARIANT"
 
 # Start the build
 make "$PACKAGE_NAME" -j"$(nproc --all)" |& tee buildlogs.txt
