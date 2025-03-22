@@ -61,15 +61,30 @@ eval "$APT_INSTALL" \
 	swig shellcheck jq shfmt
 
 echo -e "Artemis: Setting up udev rules for adb!"
-sudo curl --create-dirs -L -o /etc/udev/rules.d/51-android.rules -O -L https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules
+CURL_CMD="sudo curl --create-dirs -L -o /etc/udev/rules.d/51-android.rules -O -L https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules"
+if [ "$SILENCE" -eq 1 ]; then
+    eval "$CURL_CMD >/dev/null 2>&1"
+else
+    eval "$CURL_CMD"
+fi
 sudo chmod 644 /etc/udev/rules.d/51-android.rules
 sudo chown root /etc/udev/rules.d/51-android.rules
 sudo systemctl restart udev
 
 echo "Artemis: Installing repo"
-sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
+CURL_CMD="sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo"
+if [ "$SILENCE" -eq 1 ]; then
+    eval "$CURL_CMD >/dev/null 2>&1"
+else
+    eval "$CURL_CMD"
+fi
 sudo chmod a+rx /usr/local/bin/repo
 
-pip3 install dtschema yamllint python-magic flake8
-
+echo "Artemis: Install python packages"
+PIP_CMD="pip3 install dtschema yamllint python-magic flake8"
+if [ "$SILENCE" -eq 1 ]; then
+    eval "$PIP_CMD >/dev/null 2>&1"
+else
+    eval "$PIP_CMD"
+fi
 echo "Artemis: All done!"
