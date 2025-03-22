@@ -6,3 +6,4 @@ kernel/dtbs-check.sh
 kernel/kernel_functions.sh
 kernel/merge-drivers.sh
 setup/build-env.sh
+setup/setup_pc.sh
