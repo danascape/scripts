@@ -10,11 +10,17 @@
 # Script to setup an AOSP Build environment on Ubuntu 22.04
 
 # Update the ubuntu repositories
-sudo apt update
+echo "Artemis: Updating repositories"
+sudo apt update -qq
+
+SILENCE=1 # Set to 1 to silence output
+APT_INSTALL="sudo DEBIAN_FRONTEND=noninteractive apt install -y"
+if [ "$SILENCE" -eq 1 ]; then
+    APT_INSTALL="$APT_INSTALL >/dev/null 2>&1"
+fi
 
 echo "Artemis: Installing base packages"
-sudo DEBIAN_FRONTEND=noninteractive \
-    apt install \
+eval "$APT_INSTALL" \
     adb autoconf automake axel bc bison build-essential \
     ccache clang cmake curl expat fastboot flex g++ \
     g++-multilib gawk gcc gcc-multilib git git-lfs gnupg gperf \
@@ -27,8 +33,7 @@ sudo DEBIAN_FRONTEND=noninteractive \
     libxml-simple-perl libswitch-perl apt-utils rsync
 
 echo "Artemis: Installing Extra Packages"
-sudo DEBIAN_FRONTEND=noninteractive \
-	apt install -y \
+eval "$APT_INSTALL" \
 	ftp \
 	lftp zstd wget \
 	python3-pip \
@@ -36,28 +41,23 @@ sudo DEBIAN_FRONTEND=noninteractive \
 	git-email
 
 echo "Artemis: Installing go-lang"
-sudo DEBIAN_FRONTEND=noninteractive \
-	apt install -y \
+eval "$APT_INSTALL" \
 	golang-go
 
 echo "Artemis: Install QEMU"
-sudo DEBIAN_FRONTEND=noninteractive \
-	apt install -y \
+eval "$APT_INSTALL" \
 	qemu-system-x86
 
-echo "Artemis: Installing rpi compiler"
-sudo DEBIAN_FRONTEND=noninteractive \
-	apt install -y \
+echo "Artemis: Installing RPI cross compiler"
+eval "$APT_INSTALL" \
 	gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi 
 
 echo "Artemis: Installing linux mainline packages"
-sudo DEBIAN_FRONTEND=noninteractive \
-	apt install -y \
+eval "$APT_INSTALL" \
 	libelf-dev libfl-dev libyaml-dev cpio kpartx
 
 echo "Artemis: Installing Shell stuff"
-sudo DEBIAN_FRONTEND=noninteractive \
-	apt install -y \
+eval "$APT_INSTALL" \
 	swig shellcheck jq shfmt
 
 echo -e "Artemis: Setting up udev rules for adb!"
@@ -71,3 +71,5 @@ sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleap
 sudo chmod a+rx /usr/local/bin/repo
 
 pip3 install dtschema yamllint python-magic flake8
+
+echo "Artemis: All done!"
