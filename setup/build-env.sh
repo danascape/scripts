@@ -81,7 +81,8 @@ fi
 sudo chmod a+rx /usr/local/bin/repo
 
 echo "Artemis: Install python packages"
-PIP_CMD="pip3 install dtschema yamllint python-magic flake8"
+# BUG: Use sudo here
+PIP_CMD="sudo pip3 install dtschema yamllint python-magic flake8"
 if [ "$SILENCE" -eq 1 ]; then
     eval "$PIP_CMD >/dev/null 2>&1"
 else
