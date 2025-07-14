@@ -1,7 +1,5 @@
 functions
 env/setup_kernel.sh
 env/setup_emb.sh
-kernel/dtbs-check.sh
-kernel/kernel_functions.sh
 kernel/merge-drivers.sh
 setup/build-env.sh
